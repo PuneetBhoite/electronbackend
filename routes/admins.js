@@ -22,6 +22,28 @@ res.status(200).json({message:"Invalid",status:false})}
 
 })
 
+router.post('/display_admins',function(req,res){
+
+
+
+    try{
+        pool.query("select * from admins ",function(error,result){
+            if (error)
+            {res.status(500).json({status:false,message:"Database Error"})}
+            else
+            {
+                res.status(200).json({data:result,status:true,message:"Success"})
+            }
+        })
+    }
+    
+    catch(e)
+    {
+        res.status(500).json({status:false,message:"Servor Error"})
+    }
+
+})
+
 
 
 
