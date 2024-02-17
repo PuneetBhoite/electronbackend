@@ -6,20 +6,27 @@
 
 var app = require('../app');
 var debug = require('debug')('electronics-backend:server');
-var https = require('https');
+const https = require('https');
+const fs = require('fs');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '443');
 app.set('port', port);
+
+// HTTPS options
+const options = {
+  key: fs.readFileSync('path_to_your_private_key.pem'),
+  cert: fs.readFileSync('path_to_your_certificate.pem')
+};
 
 /**
  * Create HTTP server.
  */
 
-var server = https.createServer(app);
+var server = https.createServer(options, app);
 
 /**
  * Listen on provided port, on all network interfaces.
